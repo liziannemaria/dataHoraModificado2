@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+<style>
+   body {
+     transition: background-color 1s;
+     font-family: Arial, sans-serif;
+     color: rgb(7, 7, 7);
+     text-align: center;
+     padding-top: 70px;
+   }
+   @media(max-width: 768px){
+    body{ font: 35px; padding-top: 50px;}
+    button{ font-size: 14px; padding: 16px;}
+   }
+
+</style>
+
+</head>
+<body> 
+<h2 id="titulo"></h2>
+<p id="data"></p>
+<p id="hora"></p>
+
+
+<script>
+
+//const imagens = {
+ // manha:'img/sol.jpg',
+ // tarde:'img/tarde.jpg',
+ // noite:'img/lua.jpg'
+//};
+    function trocar(){
+     const agora = new Date();
+     const hora =agora.getHours();
+     const minutos = agora.getMinutes().toString().padStart(2,"0");
+     const segundos = agora.getSeconds().toString().padStart(2,"0");
+     const opcoes = { weekday: 'long', year:'numeric', month:'long', day:'numeric'};
+     const dataFormatada = agora.toLocaleDateString('pt-BR', opcoes);
+
+     let cor;
+     let mensagem;
+
+     if (hora >= 6 && hora < 12) {
+       cor ="#FFD700"; // dourado manhã.
+       mensagem ="Bom dia! 🌞";
+     } else if (hora >= 12 && hora <18) {
+       cor = "#FF8C00"; // laranja tarde
+       mensagem = "Boa tarde! ⛅";
+     } else if (hora >= 18 && hora <23){
+       cor = "#1E90FF"; // azul crepúsculo+.
+       mensagem = "Boa noite! 🌛 ";
+     } else {
+        cor = "#2F4F4F"; // cinza escuro madrugada
+        mensagem = "Hora de descansar! 😴";}
+    
+   
+    
+    
+     document.body.style.backgroundColor = cor;
+     document.getElementById("titulo").innerHTML=mensagem;
+     document.getElementById("hora").innerHTML = "Agora são:" + hora + ":" + minutos + ":" + segundos;
+     document.getElementById("data").innerHTML = dataFormatada;
+ 
+  };
+  trocar();
+  setInterval(trocar, 1000);
+  
+</script>
+
+  
+
+
+</body>
+</html>
