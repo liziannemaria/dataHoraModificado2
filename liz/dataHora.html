@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  
 <style>
    body {
      transition: background-color 1s;
@@ -15,17 +16,18 @@
    @media(max-width: 768px){
     body{ font: 35px; padding-top: 50px;}
     button{ font-size: 14px; padding: 16px;}
+ 
    }
-
 </style>
 
 </head>
 <body> 
+
 <h2 id="titulo"></h2>
 <p id="data"></p>
 <p id="hora"></p>
 <p id="frase"></p>
-
+<p id="diaTipo"></p>
 
 <script>
     function trocar(){
@@ -35,19 +37,21 @@
      const segundos = agora.getSeconds().toString().padStart(2,"0");
      const opcoes = { weekday: 'long', year:'numeric', month:'long', day:'numeric'};
      const dataFormatada = agora.toLocaleDateString('pt-BR', opcoes);
-
+     const diaSemana = agora.getDay();
      let cor;
      let mensagem;
+     let tipoDia;
+     let imagem;
     
 
      if (hora >= 6 && hora < 12) {
-       cor ="#FFD700"; // dourado manhã.
-       mensagem ="Bom dia! 🌞";
+    imagem = "url('sol.jpg')"
+      mensagem ="Bom dia! 🌞";
      } else if (hora >= 12 && hora <18) {
        cor = "#FF8C00"; // laranja tarde
        mensagem = "Boa tarde! ⛅";
      } else if (hora >= 18 && hora <23){
-       cor = "#1E90FF"; // azul crepúsculo+.
+       imagem = "url('lua.jpg')"
        mensagem = "Boa noite! 🌛 ";
        frases = [
           "A noite é para sonhar e planejar",
@@ -58,13 +62,20 @@
         mensagem = "Hora de descansar! 😴";
       }
     
-   
+   if (diaSemana === 0 ||diaSemana === 6){
+    tipoDia = "Hoje é fim de semana! Mas acalme, a sexta está chegando rs.";
+  } else if (diaSemana === 5) {
+    tipoDia = " Até que enfim, sextou!!";
+    } else{
+    tipoDia = "Hoje é dia de semana, dia de trabalhar.";
+   }
     
     
-     document.body.style.backgroundColor = cor;
-     document.getElementById("titulo").innerHTML=mensagem;
+     document.body.style.backgroundImage = imagem;
+     document.getElementById("titulo").innerHTML= mensagem;
      document.getElementById("hora").innerHTML = "Agora são:" + hora + ":" + minutos + ":" + segundos;
      document.getElementById("data").innerHTML = dataFormatada;
+     document.getElementById("diaTipo").innerHTML = tipoDia;
  
   };
   let frases = [];
@@ -74,6 +85,7 @@
       document.getElementById("frase").innerHTML = fraseAleatoria;
     }
   }
+
   trocar();
   setInterval(trocar, 1000);
   TrocarFrase();
@@ -86,3 +98,4 @@
 
 </body>
 </html>
+  
